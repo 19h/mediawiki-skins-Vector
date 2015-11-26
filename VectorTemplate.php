@@ -113,9 +113,24 @@ class VectorTemplate extends BaseTemplate {
 			// Loose comparison with '!=' is intentional, to catch null and false too, but not '0'
 			if ( $this->data['title'] != '' ) {
 			?>
-			<h1 id="firstHeading" class="firstHeading" lang="<?php $this->text( 'pageLanguage' ); ?>"><?php
+			<!--<h1 id="firstHeading" class="firstHeading" lang="<?php $this->text( 'pageLanguage' ); ?>"><?php
 				 $this->html( 'title' )
-			?></h1>
+			?></h1>-->
+
+            <table id="firstHeading" class="mp_header firstHeading" lang="<?php
+            $this->data['pageLanguage'] = $this->getSkin()->getTitle()->getPageViewLanguage()->getHtmlCode();
+            $this->text('pageLanguage');
+            ?>">
+                <tbody>
+                <tr>
+                    <td class=""><h1 class="firstheading" dir="auto"><?php $this->html('title') ?></h1>
+
+                        <div class="mp_title_underline"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
 			<?php
 			} ?>
 			<?php $this->html( 'prebodyhtml' ) ?>
@@ -192,6 +207,22 @@ class VectorTemplate extends BaseTemplate {
 					?>" <?php
 					echo Xml::expandAttributes( Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) )
 					?>></a></div>
+
+                <!-- Donation haxx -->
+                <div class="generated-sidebar portlet top-button" id="p-support">
+                    <h5><?php $this->msg('sidebar-support-headertext') ?></h5>
+                    <div class="body">
+                        <ul>
+                            <li id="n-button-Donate">
+                                <a href="<?php $this->msg('sidebar-support-url') ?>"><?php $this->msg('sidebar-support-buttontext') ?></a>
+                            </li>
+                            <li id="n-button-IRC">
+                                <a href="<?php $this->msg('sidebar-irc-url') ?>"><?php $this->msg('sidebar-irc-buttontext') ?></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
 				<?php $this->renderPortals( $this->data['sidebar'] ); ?>
 			</div>
 		</div>
@@ -211,6 +242,48 @@ class VectorTemplate extends BaseTemplate {
 			<?php
 			}
 			?>
+
+            <?php
+            $rqQuotes = array(
+                "We do what we must because we can.",
+                "Disregard everything i say.",
+                "The world is a beautiful place and i am no longer afraid to die.",
+                "Are you dreaming?",
+                "Don't worry, be happy.",
+                "The transcendental object at the end of time approaches.",
+                "My oven gave birth.",
+                "Smoke weed erry day.",
+                "I designed it this way myself.",
+                "You are god.",
+                "The root of all suffering is attachment.",
+                "Be the change you wish to see in the world.",
+                "Good vibes yo.",
+                "You are the universe experiencing itself.",
+                "When I get back from hell again I'm gonna be so elegant the relevance of my benevolence is evident.",
+                "They don't think the universe be like it is, but it do.",
+                "Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.",
+                "Every molecule is sacred.",
+                "Who is it that knows there is no self?",
+                "Transcending this mortal place through the power of hallucinogen induced nerd rage.",
+                "Tripping balls in the name of science for the good of the cosmos.",
+                "Every molecule is sacred.",
+                "Every pixel is sacred.",
+                "Are you dreaming?",
+                "The world is a beautiful place and I am no longer afraid to die.",
+                "Disregard everything we say.",
+                "Don’t forget the vastness of space.",
+                "Every time that wheel turns round its bound to cover just a little more ground.",
+                "If the truth can be told as to be understood, it will be believed.",
+                "He who marches out of line hears another drum.",
+                "Such a long, long time to be gone and a short time to be here.",
+                "Lately it occurs to me, what a long strange trip it's been...",
+                "I came to be without being consulted and I hope to leave with content",
+                "The problem is not to find the answer, it's to face the answer",
+            );
+            shuffle($rqQuotes);
+            ?>
+            <ul id="footer-random-quotes" style="clear:left;"><li id="footer-random-quote"><?php echo '"' . $rqQuotes[0] . '"'; ?></li></ul>
+
 			<?php $footericons = $this->getFooterIcons( "icononly" );
 			if ( count( $footericons ) > 0 ) {
 				?>
